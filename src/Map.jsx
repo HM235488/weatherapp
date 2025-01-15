@@ -26,8 +26,8 @@ function SearchBar() {
     // update currentLocation state
     const onSearchLocation = (e) => {
       updateCurrentLocation({
-        latitute: e.location.x,
-        longitude: e.location.y,
+        latitude: e.location.y,
+        longitude: e.location.x,
         name: e.location.label,
       });
     };
@@ -45,13 +45,12 @@ function SearchBar() {
 export default function Map() {
   const { userLocation, isLoading, error } = useContext(LocationContext);
 
-  // if (isLoading) return <div>Loading map...</div>;
-
   const center =
     userLocation.latitude && userLocation.longitude
       ? [userLocation.latitude, userLocation.longitude]
       : [51.505, -0.09];
 
+  // render map
   return (
     <div style={{ height: "300px", width: "50%" }}>
       <MapContainer

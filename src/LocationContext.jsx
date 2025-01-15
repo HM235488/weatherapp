@@ -54,8 +54,12 @@ export default function LocationProvider({ children }) {
     );
   }, []);
 
+  // update currentLocation
   const updateCurrentLocation = (searchedLocation) => {
-    dispatch({ type: "city/loaded", payload: searchedLocation });
+    dispatch({
+      type: "city/loaded",
+      payload: searchedLocation,
+    });
   };
 
   return (
