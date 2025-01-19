@@ -1,9 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
-import dispatch from "react";
-import { useState } from "react";
 import { LocationContext } from "./LocationContext";
 import { useEffect } from "react";
-import { useLoaderData, useLocation } from "react-router-dom";
 
 const myAPIKey = "664f7b9fd16536dbdd5d637ec703564d";
 
@@ -49,7 +46,7 @@ const WeatherProvider = ({ children }) => {
 
         try {
           const res = await fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${myAPIKey}`
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${myAPIKey}&units=metric`
           );
           const data = await res.json();
           dispatch({ type: "weather/loaded", payload: data });

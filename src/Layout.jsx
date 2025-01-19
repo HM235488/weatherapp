@@ -2,7 +2,6 @@ import { Link, Outlet } from "react-router-dom";
 import Header from "./Header";
 import Forecast from "./Forecast";
 import LocationProvider from "./LocationContext";
-import GeolocationTest from "./GeolocationTest";
 import WeatherProvider from "./WeatherContext";
 
 export default function Layout() {
