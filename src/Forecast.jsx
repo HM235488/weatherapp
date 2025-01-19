@@ -1,23 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WeatherContext } from "./WeatherContext";
 
 export default function Forecast() {
   const { weather } = useContext(WeatherContext);
+  const [day, setDay] = useState("");
 
-  if (!weather.city || !weather.list) return <div>Loading data...</div>;
+  function handleSetDay(day) {
+    return setDay(day);
+  }
 
-  const cityName = weather.city.name;
+  const cityName = weather?.city?.name;
 
   let currentDate;
   let daysArr = new Map();
 
-  weather.list.forEach((index) => {
+  weather?.list?.forEach((index) => {
     // weather.list is an array of objects
     const date = new Date(index.dt_txt);
     const options = {
       weekday: "short",
-      // month: "numeric",
-      // day: "numeric",
+      month: "numeric",
+      day: "numeric",
     };
 
     const formattedDate = new Intl.DateTimeFormat("cz-CZ", options).format(
@@ -33,12 +36,16 @@ export default function Forecast() {
     daysArr.get(formattedDate).push(index.main.temp);
   });
 
-  console.log(daysArr);
-
   return (
     <div>
-      <h3>{cityName}</h3>
-      <h4>DATE</h4>
+      <h4>Forecast</h4>
+      {/* create tabs */}
+      {Array.from(daysArr.keys()).map((day) => (
+        <button key={day} onClick={(e) => handleSetDay(e.target.innerHTML)}>
+          {day}
+        </button>
+      ))}
+      <p>{daysArr.get(day)}</p>
     </div>
   );
 }
