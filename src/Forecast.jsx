@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { WeatherContext } from "./WeatherContext";
+import Graph from "./Graph";
 
 export default function Forecast() {
   const { weather } = useContext(WeatherContext);
@@ -65,9 +66,12 @@ export default function Forecast() {
             />
             <span>{formatTemperature(weather.list[0].main.temp)}</span>
             <span>{weather.list[0].weather[0].description}</span>
+            <span>{daysArr.keys().next().value}</span>
           </div>
         )}
       </div>
+
+      <Graph isCelsius={isCelsius} convertToFahrenheit={convertToFahrenheit} />
       {/* create tabs */}
       {Array.from(daysArr.keys()).map((day) => (
         <button key={day} onClick={(e) => handleSetDay(e.target.innerHTML)}>
