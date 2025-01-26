@@ -11,9 +11,6 @@ export default function Layout() {
       <LocationProvider>
         <WeatherProvider>
           <Header />
-          <nav>
-            <Link to="map">Map</Link>
-          </nav>
           <main>
             <Outlet />
             <Forecast />

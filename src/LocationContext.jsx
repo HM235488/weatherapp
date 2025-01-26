@@ -45,7 +45,6 @@ export default function LocationProvider({ children }) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        console.log(latitude, longitude);
         dispatch({ type: "userCity/loaded", payload: { latitude, longitude } });
       },
       (error) => {

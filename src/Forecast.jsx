@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { WeatherContext } from "./WeatherContext";
 import Graph from "./Graph";
+import styles from "./Forecast.module.css";
 
 export default function Forecast() {
   const { weather } = useContext(WeatherContext);
@@ -48,38 +49,59 @@ export default function Forecast() {
       currentDate = formattedDate;
     }
 
-    daysArr.get(formattedDate).push(index.main.temp);
-  });
+    daysArr.get(formattedDate).push({
+      time: date.toLocaleTimeString("cz-CZ", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      temp: index.main.temp,
+    });
+  }); // Map(5) {'Mon, 27/01' => Array(8), 'Tue, 28/01' => Array(8), 'Wed, 29/01' => Array(8), 'Thu, 30/01' => Array(8), 'Fri, 31/01' => Array(8)}
+  // each array contains an object with time and temp
+
+  console.log(daysArr);
 
   return (
-    <div>
-      <h4>Forecast - {weather?.city?.name}</h4>
-      <button onClick={toggleTemperatureUnit}>
+    <div className={styles.forecastContainer}>
+      <h4 className={styles.forecastTitle}>Forecast - {weather?.city?.name}</h4>
+      <button className={styles.unitToggle} onClick={toggleTemperatureUnit}>
         Switch to {isCelsius ? "Fahrenheit" : "Celsius"}
       </button>
-      <div>
+      <div className={styles.currentWeather}>
         {weather?.list && weather.list[0]?.weather && (
           <div>
             <img
+              className={styles.weatherIcon}
               src={`http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}.png`}
               alt="Weather icon"
             />
-            <span>{formatTemperature(weather.list[0].main.temp)}</span>
-            <span>{weather.list[0].weather[0].description}</span>
+            <span className={styles.temperature}>
+              {formatTemperature(weather.list[0].main.temp)}
+            </span>
+            <span className={styles.description}>
+              {weather.list[0].weather[0].description}
+            </span>
             <span>{daysArr.keys().next().value}</span>
           </div>
         )}
       </div>
 
       <Graph isCelsius={isCelsius} convertToFahrenheit={convertToFahrenheit} />
-      {/* create tabs */}
-      {Array.from(daysArr.keys()).map((day) => (
-        <button key={day} onClick={(e) => handleSetDay(e.target.innerHTML)}>
-          {day}
-        </button>
-      ))}
+      <div className={styles.dayTabs}>
+        {Array.from(daysArr.keys()).map((dayItem) => (
+          <button
+            key={dayItem}
+            className={`${styles.dayTab} ${
+              day === dayItem ? styles.active : ""
+            }`}
+            onClick={() => handleSetDay(dayItem)}
+          >
+            {dayItem}
+          </button>
+        ))}
+      </div>
 
-      <table>
+      <table className={styles.forecastTable}>
         <thead>
           <tr>
             <th>Day</th>
@@ -87,10 +109,10 @@ export default function Forecast() {
           </tr>
         </thead>
         <tbody>
-          {daysArr.get(day)?.map((temp) => (
-            <tr key={Math.random()}>
-              <td>Time</td>
-              <td>{formatTemperature(temp)}</td>
+          {daysArr.get(day)?.map((item, index) => (
+            <tr key={index}>
+              <td>{item.time}</td>
+              <td>{formatTemperature(item.temp)}</td>
             </tr>
           ))}
         </tbody>

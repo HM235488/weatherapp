@@ -1,7 +1,109 @@
 :root {
-  --primary-color: #3498db;
-  --secondary-color: #2ecc71;
-  --background-color: #f5f7fa;
-  --text-color: #34495e;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #00bcd4;
+  --secondary-color: #009688;
+  --background-color: #e0f7fa;
+  --text-color: #263238;
+  --light-accent: #b2ebf2;
+}
+
+.forecastContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.forecastTitle {
+  color: var(--primary-color);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.unitToggle {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.unitToggle:hover {
+  background-color: var(--secondary-color);
+}
+
+.currentWeather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-accent);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.weatherIcon {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-right: 10px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.dayTabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dayTab {
+  background-color: var(--light-accent);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.dayTab:hover,
+.dayTab.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.forecastTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.forecastTable th,
+.forecastTable td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--light-accent);
+}
+
+.forecastTable th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.forecastTable tr:nth-child(even) {
+  background-color: var(--light-accent);
 }

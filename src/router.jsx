@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "map",
+        path: "/:city",
         element: <Map />,
       },
     ],
