@@ -4,12 +4,25 @@ import { WeatherContext } from "./WeatherContext";
 export default function Forecast() {
   const { weather } = useContext(WeatherContext);
   const [day, setDay] = useState("");
+  const [isCelsius, setIsCelsius] = useState(true);
 
   function handleSetDay(day) {
     return setDay(day);
   }
 
-  const cityName = weather?.city?.name;
+  // toggle between Celsius and Fahrenheit
+  function toggleTemperatureUnit() {
+    setIsCelsius(!isCelsius);
+  }
+
+  function convertToFahrenheit(celsius) {
+    return (celsius * 9) / 5 + 32;
+  }
+
+  function formatTemperature(temp) {
+    const temperature = isCelsius ? temp : convertToFahrenheit(temp);
+    return `${temperature.toFixed(1)} ${isCelsius ? "°C" : "°F"}`;
+  }
 
   let currentDate;
   let daysArr = new Map();
@@ -40,11 +53,19 @@ export default function Forecast() {
   return (
     <div>
       <h4>Forecast - {weather?.city?.name}</h4>
+      <button onClick={toggleTemperatureUnit}>
+        Switch to {isCelsius ? "Fahrenheit" : "Celsius"}
+      </button>
       <div>
         {weather?.list && weather.list[0]?.weather && (
-          <img
-            src={`http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}.png`}
-          />
+          <div>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}.png`}
+              alt="Weather icon"
+            />
+            <span>{formatTemperature(weather.list[0].main.temp)}</span>
+            <span>{weather.list[0].weather[0].description}</span>
+          </div>
         )}
       </div>
       {/* create tabs */}
@@ -53,7 +74,13 @@ export default function Forecast() {
           {day}
         </button>
       ))}
-      <p>{daysArr.get(day)}</p>
+      <p></p>
+      <p>
+        {daysArr
+          .get(day)
+          ?.map((temp) => formatTemperature(temp))
+          .join(", ")}
+      </p>
     </div>
   );
 }
