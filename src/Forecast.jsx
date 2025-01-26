@@ -78,13 +78,23 @@ export default function Forecast() {
           {day}
         </button>
       ))}
-      <p></p>
-      <p>
-        {daysArr
-          .get(day)
-          ?.map((temp) => formatTemperature(temp))
-          .join(", ")}
-      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Temperature</th>
+          </tr>
+        </thead>
+        <tbody>
+          {daysArr.get(day)?.map((temp) => (
+            <tr key={Math.random()}>
+              <td>Time</td>
+              <td>{formatTemperature(temp)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
