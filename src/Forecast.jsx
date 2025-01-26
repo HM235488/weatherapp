@@ -27,6 +27,7 @@ export default function Forecast() {
       date
     );
 
+    console.log(weather);
     // divide dt into several arrays by days
     if (!daysArr.has(formattedDate)) {
       daysArr.set(formattedDate, []);
@@ -38,7 +39,14 @@ export default function Forecast() {
 
   return (
     <div>
-      <h4>Forecast</h4>
+      <h4>Forecast - {weather?.city?.name}</h4>
+      <div>
+        {weather?.list && weather.list[0]?.weather && (
+          <img
+            src={`http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}.png`}
+          />
+        )}
+      </div>
       {/* create tabs */}
       {Array.from(daysArr.keys()).map((day) => (
         <button key={day} onClick={(e) => handleSetDay(e.target.innerHTML)}>

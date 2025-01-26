@@ -1,34 +1,26 @@
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
 import { WeatherContext } from "./WeatherContext";
 import { LineChart } from "@mui/x-charts";
-import { number } from "prop-types";
 
 export default function Graph() {
   const { weather } = useContext(WeatherContext);
 
-  const chartData = useMemo(() => {
-    if (!weather || !weather.list) return null;
+  if (!weather || !weather.list) return "Please wait...";
 
-    const temperatures = weather.list.map((item) => item.main.temp);
-    const timestamps = weather.list.map((item) => new Date(item.dt * 1000));
-    console.log(timestamps);
-
-    return { temperatures, timestamps };
-  }, [weather]);
-
-  if (!chartData) return "Please wait...";
+  const temperatures = weather.list.map((item) => item.main.temp);
+  const timestamps = weather.list.map((item) => new Date(item.dt * 1000));
 
   return (
     <LineChart
       xAxis={[
         {
-          data: chartData.timestamps,
+          data: timestamps,
           scaleType: "time",
         },
       ]}
       series={[
         {
-          data: chartData.temperatures,
+          data: temperatures,
           label: "Temperature (°C)",
         },
       ]}
