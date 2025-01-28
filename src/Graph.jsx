@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WeatherContext } from "./WeatherContext";
 import { LineChart } from "@mui/x-charts";
+import styles from "./Graph.module.css";
 
 export default function Graph({ isCelsius, convertToFahrenheit }) {
   const { weather } = useContext(WeatherContext);
+  const [currentGraph, setCurrentGraph] = useState(0);
 
   if (!weather || !weather.list) return "Please wait...";
 
@@ -14,40 +16,55 @@ export default function Graph({ isCelsius, convertToFahrenheit }) {
   const precipitation = weather.list.map((item) => item.rain?.["3h"] || 0);
 
   return (
-    <>
-      <LineChart
-        xAxis={[
-          {
-            data: timestamps,
-            scaleType: "time",
-          },
-        ]}
-        series={[
-          {
-            data: temperatures,
-            label: "Temperature (°C)",
-          },
-        ]}
-        width={800}
-        height={300}
-      />
+    <div className={styles.graphContainer}>
+      <div
+        className={styles.graphWrapper}
+        style={{ transform: `translateX(-${currentGraph * 50}%)` }}
+      >
+        <div>
+          <LineChart
+            xAxis={[
+              {
+                data: timestamps,
+                scaleType: "time",
+              },
+            ]}
+            series={[
+              {
+                data: temperatures,
+                label: `Temperature (${isCelsius ? "°C" : "°F"})`,
+              },
+            ]}
+            width={800}
+            height={300}
+          />
+        </div>
+        <div>
+          <LineChart
+            xAxis={[
+              {
+                data: timestamps,
+                scaleType: "time",
+              },
+            ]}
+            series={[
+              {
+                data: precipitation,
+                label: "Precipitation (mm)",
+              },
+            ]}
+            width={800}
+            height={300}
+          />
+        </div>
+      </div>
 
-      <LineChart
-        xAxis={[
-          {
-            data: timestamps,
-            scaleType: "time",
-          },
-        ]}
-        series={[
-          {
-            data: precipitation,
-            label: "Precipitation (mm)",
-          },
-        ]}
-        width={800}
-        height={300}
-      />
-    </>
+      <button
+        className={styles.slideButton}
+        onClick={() => setCurrentGraph((prev) => (prev === 0 ? 1 : 0))}
+      >
+        →
+      </button>
+    </div>
   );
 }

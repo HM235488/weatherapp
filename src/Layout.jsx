@@ -4,6 +4,7 @@ import Forecast from "./Forecast";
 import Graph from "./Graph";
 import LocationProvider from "./LocationContext";
 import WeatherProvider from "./WeatherContext";
+import Map from "./Map";
 
 export default function Layout() {
   return (
@@ -12,6 +13,7 @@ export default function Layout() {
         <WeatherProvider>
           <Header />
           <main>
+            <Map />
             <Outlet />
             <Forecast />
           </main>
