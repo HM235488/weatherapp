@@ -1,24 +1,22 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Forecast from "./Forecast";
-import Graph from "./Graph";
+import "./style.css";
 import LocationProvider from "./LocationContext";
 import WeatherProvider from "./WeatherContext";
-import Map from "./Map";
 
 export default function Layout() {
   return (
-    <>
+    <div className="app-container">
       <LocationProvider>
         <WeatherProvider>
           <Header />
           <main>
-            <Map />
             <Outlet />
             <Forecast />
           </main>
         </WeatherProvider>
       </LocationProvider>
-    </>
+    </div>
   );
 }

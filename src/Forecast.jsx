@@ -75,12 +75,14 @@ export default function Forecast() {
               src={`http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}.png`}
               alt="Weather icon"
             />
-            <span className={styles.temperature}>
-              {formatTemperature(weather.list[0].main.temp)}
-            </span>
-            <span className={styles.description}>
-              {weather.list[0].weather[0].description}
-            </span>
+            <div className={styles.weatherInfo}>
+              <span className={styles.temperature}>
+                {formatTemperature(weather.list[0].main.temp)}
+              </span>
+              <span className={styles.description}>
+                {weather.list[0].weather[0].description}
+              </span>
+            </div>
             <span>{daysArr.keys().next().value}</span>
           </div>
         )}
@@ -104,7 +106,7 @@ export default function Forecast() {
       <table className={styles.forecastTable}>
         <thead>
           <tr>
-            <th>Day</th>
+            <th>Hour</th>
             <th>Temperature</th>
           </tr>
         </thead>

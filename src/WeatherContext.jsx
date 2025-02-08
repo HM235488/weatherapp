@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import { LocationContext } from "./LocationContext";
 import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const myAPIKey = "664f7b9fd16536dbdd5d637ec703564d";
 
@@ -29,6 +30,10 @@ const WeatherProvider = ({ children }) => {
     initialWeather
   );
 
+  const [searchParams, _] = useSearchParams();
+  const lat = searchParams.get("lat");
+  const long = searchParams.get("long");
+
   useEffect(
     function () {
       async function getWeatherData() {
@@ -36,7 +41,9 @@ const WeatherProvider = ({ children }) => {
           return console.log("Location not available yet.");
 
         let location;
-        if (currentLocation.latitude && currentLocation.longitude) {
+        if (lat && long) {
+          location = { latitude: lat, longitude: long };
+        } else if (currentLocation.latitude && currentLocation.longitude) {
           location = currentLocation;
         } else if (userLocation.latitude && userLocation.longitude) {
           location = userLocation;
@@ -64,7 +71,7 @@ const WeatherProvider = ({ children }) => {
 
       getWeatherData();
     },
-    [userLocation, currentLocation]
+    [userLocation, currentLocation, lat, long]
   );
 
   return (

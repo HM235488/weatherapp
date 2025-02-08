@@ -8,8 +8,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/:city",
-        // element: <Map />,
+        path: "/",
+        element: <Map />,
       },
     ],
   },
